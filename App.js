@@ -1,30 +1,35 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ChatScreen from './src/screens/ChatScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import CadastroScreen from './src/screens/CadastroScreen';
+import MainScreen from './src/screens/MainScreen';
+
 
 const Stack = createStackNavigator();
 
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.homeContainer}>
-      <Text style={styles.welcomeText}>Bem-vindo!</Text>
+      <Image
+        source={{ uri: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Ffreepng%2Fflat-illustration-of-a-male-doctor-vector_13312862.html&psig=AOvVaw1qDe9hQSpnePPiu41HTT5c&ust=1737825990532000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIDegLnwjosDFQAAAAAdAAAAABAR' }} 
+        style={styles.image}
+      />
+      <Text style={styles.titleText}>Conheça a mentoria EducAIdoc</Text>
+      <Text style={styles.descriptionText}>
+        Conte com uma poderosa inteligência artificial especializada para ajudá-lo em tempo real na tomada de decisões.
+      </Text>
       <TouchableOpacity
-        style={styles.chatButton}
-        onPress={() => navigation.navigate('Chat')}
+        style={styles.accessButton}
+        onPress={() => navigation.navigate('Login')} // Corrigido para corresponder ao nome do Stack.Screen
       >
-        <Text style={styles.chatButtonText}>Ir para o Chat</Text>
+        <Text style={styles.accessButtonText}>Acessar</Text>
       </TouchableOpacity>
-    </View>
-  );
-}
-
-function ChatScreenWithIntro() {
-  return (
-    <View style={styles.chatContainer}>
-      <Text style={styles.introText}>Olá, isso é um chat por IA, pergunte o que quiser!</Text>
-      <ChatScreen />
+      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}> {/* Corrigido */}
+        <Text style={styles.registerText}>Não possui conta? Cadastre-se</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -34,7 +39,10 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Chat" component={ChatScreenWithIntro} />
+        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Cadastro" component={CadastroScreen} />
+        <Stack.Screen name="Chat" component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -45,37 +53,50 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f7f7f8',
+    backgroundColor: '#0C7384',
+    padding: 20,
   },
-  welcomeText: {
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 20,
+  },
+  titleText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#333',
+    color: 'white',
+    fontFamily: 'Inter',
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  chatButton: {
-    backgroundColor: '#2596be',
+  descriptionText: {
+    fontSize: 16,
+    color: 'white',
+    fontFamily: 'Inter',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  accessButton: {
+    backgroundColor: 'white',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 20,
+    borderRadius: 8,
+    width: '80%',
+    alignItems: 'center',
+    marginBottom: 15,
   },
-  chatButtonText: {
-    color: 'white',
+  accessButtonText: {
+    color: '#0C7384',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'Inter',
   },
-  chatContainer: {
-    flex: 1,
-    backgroundColor: '#f7f7f8',
-  },
-  introText: {
-    textAlign: 'center',
-    padding: 10,
-    fontSize: 16,
-    color: '#666',
-    backgroundColor: '#e6e6e6',
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
+  registerText: {
+    fontSize: 14,
+    color: 'white',
+    fontFamily: 'Inter',
+    textDecorationLine: 'underline',
   },
 });
 
