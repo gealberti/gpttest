@@ -1,34 +1,42 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
 import OpenAI from 'openai';
 import { OPENAI_API_KEY } from '@env';
-import Markdown from 'react-native-markdown-display';
 
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
-export function ChatScreen() {
-  const [messages, setMessages] = useState([]);
+export function ChatScreen({ navigation }) {
+  const [messages, setMessages] = useState([
+    { id: uuid.v4(), text: 'Olá, tudo bem?', time: '10:26', user: 'bot' },
+    { id: uuid.v4(), text: 'Bem-vindo(a) à mentoria da Educado!', time: '10:26', user: 'bot' },
+    { id: uuid.v4(), text: 'Alertamos para que não compartilhe dados pessoais e imagens...', time: '10:26', user: 'bot' },
+    { id: uuid.v4(), text: 'Após enviar os dados, direcionaremos sua mensagem para um de nossos mentores.', time: '10:26', user: 'bot' },
+    { id: uuid.v4(), text: 'Depois de iniciado o atendimento, se não houver interação após 2 horas, o atendimento será encerrado.', time: '10:26', user: 'bot' },
+  ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  const sendMessage = async (userMessage) => {
-    const userMessageObj = {
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+
+    const userMessage = {
       id: uuid.v4(),
-      text: userMessage,
-      createdAt: new Date(),
-      user: { id: 1, name: 'You' },
+      text: input.trim(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      user: 'user',
     };
 
-    setMessages((prevMessages) => [userMessageObj, ...prevMessages]);
+    setMessages((prevMessages) => [userMessage, ...prevMessages]);
     setInput('');
     setIsTyping(true);
 
     try {
       const completion = await openai.chat.completions.create({
         messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
-          { role: 'user', content: userMessage },
+          { role: 'system', content: 'Você é um assistente médico que fornece informações úteis.' },
+          { role: 'user', content: userMessage.text },
         ],
         model: 'gpt-4o-mini',
       });
@@ -36,32 +44,45 @@ export function ChatScreen() {
       const aiMessage = {
         id: uuid.v4(),
         text: completion.choices[0].message.content,
-        createdAt: new Date(),
-        user: { id: 2, name: 'AI Assistant', avatar: 'https://placeimg.com/140/140/any' },
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        user: 'bot',
       };
 
       setMessages((prevMessages) => [aiMessage, ...prevMessages]);
     } catch (error) {
-      console.error('Error fetching AI response:', error);
+      console.error('Erro ao obter resposta da OpenAI:', error);
     } finally {
       setIsTyping(false);
     }
   };
 
   const renderMessage = ({ item }) => {
-    const isUser = item.user.id === 1;
+    const isUser = item.user === 'user';
     return (
-      <View style={[styles.messageContainer, isUser ? styles.userMessage : styles.aiMessage]}>
-        <Markdown style={{ body: { color: isUser ? 'white' : '#333', fontSize: 16 } }}>
-          {item.text}
-        </Markdown>
-        <Text style={styles.timestamp}>{item.createdAt.toLocaleTimeString()}</Text>
+      <View style={[styles.messageContainer, isUser ? styles.userMessage : styles.botMessage]}>
+        <Text style={styles.messageText}>{item.text}</Text>
+        <Text style={styles.timestamp}>{item.time}</Text>
       </View>
     );
   };
 
   return (
     <View style={styles.container}>
+      {/* Cabeçalho */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="#333" />
+        </TouchableOpacity>
+        <View>
+          <Text style={styles.headerTitle}>JA</Text>
+          <Text style={styles.headerSubtitle}>Cardiologia</Text>
+        </View>
+        <TouchableOpacity style={styles.attentionButton}>
+          <Text style={styles.attentionText}>Chamar Atenção</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Lista de mensagens */}
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
@@ -70,21 +91,25 @@ export function ChatScreen() {
         contentContainerStyle={styles.messageList}
       />
 
-      {isTyping && <Text style={styles.typingIndicator}>AI is typing...</Text>}
+      {/* Indicador de digitação */}
+      {isTyping && <ActivityIndicator style={styles.typingIndicator} size="small" color="#008080" />}
 
+      {/* Botão "Encerrar chamado" */}
+      <TouchableOpacity style={styles.closeButton}>
+        <Text style={styles.closeButtonText}>Encerrar chamado</Text>
+      </TouchableOpacity>
+
+      {/* Campo de entrada de mensagem */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Type your message"
+          placeholder="Escreva aqui..."
           value={input}
           onChangeText={setInput}
           placeholderTextColor="#aaa"
         />
-        <TouchableOpacity
-          style={styles.sendButton}
-          onPress={() => input.trim() && sendMessage(input.trim())}
-        >
-          <Text style={styles.sendButtonText}>Send</Text>
+        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <Ionicons name="send" size={22} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
@@ -94,37 +119,76 @@ export function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f7f8',
+    backgroundColor: '#F7F7F8',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#fff',
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#888',
+  },
+  attentionButton: {
+    backgroundColor: '#008080',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+  },
+  attentionText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   messageList: {
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
   },
   messageContainer: {
-    marginVertical: 8,
+    maxWidth: '80%',
     padding: 12,
     borderRadius: 12,
-    maxWidth: '80%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    marginVertical: 5,
+  },
+  botMessage: {
+    backgroundColor: '#E4F1EE',
+    alignSelf: 'flex-start',
   },
   userMessage: {
-    backgroundColor: '#2596be',
+    backgroundColor: '#D1E7DD',
     alignSelf: 'flex-end',
   },
-  aiMessage: {
-    backgroundColor: '#ffffff',
-    alignSelf: 'flex-start',
-    borderColor: '#e6e6e6',
-    borderWidth: 1,
+  messageText: {
+    fontSize: 16,
+    color: '#333',
   },
   timestamp: {
-    fontSize: 10,
-    color: '#999',
-    marginTop: 5,
+    fontSize: 12,
+    color: '#666',
     textAlign: 'right',
+    marginTop: 5,
+  },
+  typingIndicator: {
+    padding: 10,
+    textAlign: 'center',
+  },
+  closeButton: {
+    alignSelf: 'center',
+    marginVertical: 10,
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: '#D00000',
+    fontWeight: 'bold',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -132,33 +196,20 @@ const styles = StyleSheet.create({
     padding: 10,
     borderTopWidth: 1,
     borderColor: '#ddd',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
   },
   input: {
     flex: 1,
     height: 40,
-    borderWidth: 1,
-    borderColor: '#ddd',
     borderRadius: 20,
     paddingHorizontal: 15,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#F0F0F0',
   },
   sendButton: {
     marginLeft: 10,
-    backgroundColor: '#2596be',
+    backgroundColor: '#008080',
     borderRadius: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  sendButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  typingIndicator: {
     padding: 10,
-    fontStyle: 'italic',
-    color: '#666',
-    textAlign: 'center',
   },
 });
 

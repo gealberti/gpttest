@@ -47,7 +47,7 @@ export function MainScreen({ navigation }) {
             title={item.title}
             subtitle={item.subtitle}
             time={item.time}
-            onPress={() => navigation.navigate('FormScreen')}
+            onPress={() => navigation.navigate('Form')}
           />
         )}
         contentContainerStyle={styles.list}

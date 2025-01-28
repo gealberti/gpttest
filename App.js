@@ -6,6 +6,7 @@ import ChatScreen from './src/screens/ChatScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import CadastroScreen from './src/screens/CadastroScreen';
 import MainScreen from './src/screens/MainScreen';
+import FormScreen from './src/screens/FormScreen';
 
 
 const Stack = createStackNavigator();
@@ -43,6 +44,8 @@ function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Cadastro" component={CadastroScreen} />
         <Stack.Screen name="Chat" component={ChatScreen} />
+        <Stack.Screen name="Form" component={FormScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
