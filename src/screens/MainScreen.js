@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
 const Card = ({ title, subtitle, time, onPress }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
@@ -39,6 +38,14 @@ export function MainScreen({ navigation }) {
 
       <Text style={styles.sectionTitle}>Mentorias</Text>
 
+      {/* Botão Novo Chat */}
+      <TouchableOpacity
+        style={styles.newChatButton}
+        onPress={() => navigation.navigate('Form')}
+      >
+        <Text style={styles.newChatText}>Novo Chat</Text>
+      </TouchableOpacity>
+
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
@@ -47,7 +54,7 @@ export function MainScreen({ navigation }) {
             title={item.title}
             subtitle={item.subtitle}
             time={item.time}
-            onPress={() => navigation.navigate('Form')}
+            onPress={() => navigation.navigate('Chat')}
           />
         )}
         contentContainerStyle={styles.list}
@@ -63,7 +70,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   header: {
-    backgroundColor: '#0C7384',
+    backgroundColor: '#333333',
     padding: 16,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#0C7384',
+    color: '#333333',
     marginVertical: 16,
   },
   list: {
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#0C7384',
+    color: '#333333',
   },
   cardSubtitle: {
     fontSize: 14,
@@ -115,6 +122,19 @@ const styles = StyleSheet.create({
   cardTime: {
     fontSize: 12,
     color: '#6C757D',
+  },
+  newChatButton: {
+    backgroundColor: '#333333',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  newChatText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 

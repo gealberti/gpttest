@@ -9,6 +9,9 @@ export function ForgotPassScreen({ navigation }) {
   const handleNext = () => {
     if (email.trim()) {
       setIsSubmitted(true);
+      setTimeout(() => {
+        navigation.navigate('NewPassword'); // Envia para a tela de nova senha
+      }, 1500);
     }
   };
 
@@ -16,7 +19,7 @@ export function ForgotPassScreen({ navigation }) {
     <View style={styles.container}>
       {/* Botão de Voltar */}
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Ionicons name="arrow-back" size={24} color="#333" />
+        <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
       </TouchableOpacity>
 
       {/* Exibir mensagem de sucesso após envio */}
@@ -29,7 +32,7 @@ export function ForgotPassScreen({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Digite seu e-mail ou telefone"
-              placeholderTextColor="#888"
+              placeholderTextColor="#B0B0B0"
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
@@ -39,13 +42,10 @@ export function ForgotPassScreen({ navigation }) {
 
           {/* Botão Próximo */}
           <TouchableOpacity style={styles.button} onPress={handleNext}>
-            <Text style={styles.buttonText}>Próximo</Text>
+            <Text style={styles.buttonText}>Enviar email</Text>
           </TouchableOpacity>
 
-          {/* Link para Login */}
-          <Text style={styles.loginText}>
-            Já possui uma conta? <Text style={styles.loginLink} onPress={() => navigation.navigate('LoginScreen')}>Login</Text>
-          </Text>
+         
         </>
       ) : (
         <Text style={styles.successMessage}>
@@ -59,7 +59,7 @@ export function ForgotPassScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D3D3D3', // Fundo cinza
+    backgroundColor: '#333333', // Cinza escuro
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
@@ -72,52 +72,52 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#FFFFFF',
     marginBottom: 20,
     textAlign: 'center',
   },
   inputContainer: {
     width: '100%',
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#555555', // Cinza médio
     borderRadius: 8,
     padding: 10,
     marginBottom: 15,
   },
   label: {
     fontSize: 14,
-    color: '#555',
+    color: '#CCCCCC',
     marginBottom: 5,
   },
   input: {
     fontSize: 16,
-    color: '#000',
+    color: '#FFFFFF',
     paddingVertical: 5,
   },
   button: {
     width: '100%',
-    backgroundColor: '#008080',
+    backgroundColor: '#FFFFFF',
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#333333', // Cinza escuro para manter o padrão
     fontSize: 16,
     fontWeight: 'bold',
   },
   loginText: {
     marginTop: 20,
     fontSize: 14,
-    color: '#333',
+    color: '#FFFFFF',
   },
   loginLink: {
     fontWeight: 'bold',
-    color: '#007BFF',
+    color: '#1E90FF', // Azul claro para contraste
   },
   successMessage: {
     fontSize: 18,
-    color: '#008080',
+    color: '#1E90FF',
     textAlign: 'center',
     paddingHorizontal: 20,
   },

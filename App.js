@@ -7,7 +7,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import CadastroScreen from './src/screens/CadastroScreen';
 import MainScreen from './src/screens/MainScreen';
 import FormScreen from './src/screens/FormScreen';
-
+import ForgotPassword from './src/screens/ForgotPassScreen';
+import NewPassword from './src/screens/NewPasswodScreen';
 
 const Stack = createStackNavigator();
 
@@ -24,12 +25,12 @@ function HomeScreen({ navigation }) {
       </Text>
       <TouchableOpacity
         style={styles.accessButton}
-        onPress={() => navigation.navigate('Login')} // Corrigido para corresponder ao nome do Stack.Screen
+        onPress={() => navigation.navigate('Cadastro')} // Alterado para Cadastro
       >
-        <Text style={styles.accessButtonText}>Acessar</Text>
+        <Text style={styles.accessButtonText}>Cadastre-se</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}> {/* Corrigido */}
-        <Text style={styles.registerText}>Não possui conta? Cadastre-se</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}> {/* Alterado para Login */}
+        <Text style={styles.registerText}>Já possui login? Faça login</Text>
       </TouchableOpacity>
     </View>
   );
@@ -45,7 +46,8 @@ function App() {
         <Stack.Screen name="Cadastro" component={CadastroScreen} />
         <Stack.Screen name="Chat" component={ChatScreen} />
         <Stack.Screen name="Form" component={FormScreen} />
-
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="NewPassword" component={NewPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0C7384',
+    backgroundColor: '#333333',
     padding: 20,
   },
   image: {
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   accessButtonText: {
-    color: '#0C7384',
+    color: '#333333',
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Inter',

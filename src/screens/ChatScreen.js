@@ -12,7 +12,6 @@ export function ChatScreen({ navigation }) {
     { id: uuid.v4(), text: 'Olá, tudo bem?', time: '10:26', user: 'bot' },
     { id: uuid.v4(), text: 'Bem-vindo(a) à mentoria da Educado!', time: '10:26', user: 'bot' },
     { id: uuid.v4(), text: 'Alertamos para que não compartilhe dados pessoais e imagens...', time: '10:26', user: 'bot' },
-    { id: uuid.v4(), text: 'Após enviar os dados, direcionaremos sua mensagem para um de nossos mentores.', time: '10:26', user: 'bot' },
     { id: uuid.v4(), text: 'Depois de iniciado o atendimento, se não houver interação após 2 horas, o atendimento será encerrado.', time: '10:26', user: 'bot' },
   ]);
   const [input, setInput] = useState('');
@@ -77,9 +76,6 @@ export function ChatScreen({ navigation }) {
           <Text style={styles.headerTitle}>JA</Text>
           <Text style={styles.headerSubtitle}>Cardiologia</Text>
         </View>
-        <TouchableOpacity style={styles.attentionButton}>
-          <Text style={styles.attentionText}>Chamar Atenção</Text>
-        </TouchableOpacity>
       </View>
 
       {/* Lista de mensagens */}
@@ -92,7 +88,7 @@ export function ChatScreen({ navigation }) {
       />
 
       {/* Indicador de digitação */}
-      {isTyping && <ActivityIndicator style={styles.typingIndicator} size="small" color="#008080" />}
+      {isTyping && <ActivityIndicator style={styles.typingIndicator} size="small" color="#333333" />}
 
       {/* Botão "Encerrar chamado" */}
       <TouchableOpacity style={styles.closeButton}>
@@ -139,7 +135,7 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   attentionButton: {
-    backgroundColor: '#008080',
+    backgroundColor: '#333333', // Cinza escuro
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 8,
@@ -160,16 +156,16 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   botMessage: {
-    backgroundColor: '#E4F1EE',
+    backgroundColor: '#D1D1D1', // Cinza claro
     alignSelf: 'flex-start',
   },
   userMessage: {
-    backgroundColor: '#D1E7DD',
+    backgroundColor: '#E4E4E4', // Outro tom de cinza claro
     alignSelf: 'flex-end',
   },
   messageText: {
     fontSize: 16,
-    color: '#333',
+    color: '#333333', // Cinza escuro
   },
   timestamp: {
     fontSize: 12,
@@ -207,7 +203,7 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     marginLeft: 10,
-    backgroundColor: '#008080',
+    backgroundColor: '#333333', // Cinza escuro
     borderRadius: 20,
     padding: 10,
   },

@@ -11,12 +11,12 @@ export function LoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Vamos entrar</Text>
-      <Text style={styles.subtitle}>Bem-vindo de volta.\nFaça o seu login aqui!</Text>
+      <Text style={styles.subtitle}>Bem-vindo de volta. Faça o seu login aqui!</Text>
 
       <TextInput
         style={styles.input}
         placeholder="E-mail ou Telefone"
-        placeholderTextColor="#A9D0D6"
+        placeholderTextColor="#B0B0B0"
         value={email}
         onChangeText={setEmail}
       />
@@ -25,7 +25,7 @@ export function LoginScreen() {
         <TextInput
           style={styles.passwordInput}
           placeholder="Senha"
-          placeholderTextColor="#A9D0D6"
+          placeholderTextColor="#B0B0B0"
           secureTextEntry={isPasswordHidden}
           value={password}
           onChangeText={setPassword}
@@ -38,20 +38,16 @@ export function LoginScreen() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
         <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.loginButton}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Main')}
       >
-<Text style={styles.loginButtonText} onPress={() => { 
-  console.log("Botão clicado");
-  navigation.navigate('Main');
-}}>
-  Entrar
-</Text>      </TouchableOpacity>
+        <Text style={styles.loginButtonText}>Entrar</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
         <Text style={styles.registerText}>
@@ -67,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0C7384',
+    backgroundColor: '#333333', // Cinza escuro
     paddingHorizontal: 20,
   },
   title: {
@@ -84,7 +80,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    backgroundColor: '#1A8CA2',
+    backgroundColor: '#555555', // Cinza médio
     borderRadius: 8,
     padding: 15,
     color: '#FFFFFF',
@@ -94,7 +90,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1A8CA2',
+    backgroundColor: '#555555', // Cinza médio
     borderRadius: 8,
     marginBottom: 10,
   },
@@ -126,7 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   loginButtonText: {
-    color: '#0C7384',
+    color: '#333333', // Cinza escuro para combinar
     fontSize: 16,
     fontWeight: 'bold',
   },

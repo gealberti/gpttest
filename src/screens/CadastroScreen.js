@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 
-export function CadastroScreen() {
+export function CadastroScreen({ navigation }) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -77,7 +77,7 @@ export function CadastroScreen() {
         onChangeText={setRepetirSenha}
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Main')}>
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
     </View>
@@ -87,7 +87,7 @@ export function CadastroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0C7384',
+    backgroundColor: '#333333',
     padding: 20,
     justifyContent: 'center',
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   input: {
-    backgroundColor: '#0C7384',
+    backgroundColor: '#333333',
     borderWidth: 1,
     borderColor: '#B0B0B0',
     borderRadius: 8,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonText: {
-    color: '#0C7384',
+    color: '#333333',
     fontSize: 16,
     fontWeight: 'bold',
   },
