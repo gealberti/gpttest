@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';  // Importando ícones
 
 export function FormScreen({ navigation }) {
   const [gender, setGender] = useState('Masculino');
@@ -12,6 +13,11 @@ export function FormScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* Botão de Voltar */}
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="#4A4A4A" />
+      </TouchableOpacity>
+
       <Text style={styles.title}>Solicitar mentoria</Text>
 
       <Text style={styles.label}>Iniciais do Paciente</Text>
@@ -103,6 +109,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
     padding: 20,
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#4A4A4A',
+    marginLeft: 10,
   },
   title: {
     fontSize: 22,
