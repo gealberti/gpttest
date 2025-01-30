@@ -10,7 +10,7 @@ const openai = new OpenAI({ apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: tru
 export function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([
     { id: uuid.v4(), text: 'Olá, tudo bem?', time: '10:26', user: 'bot' },
-    { id: uuid.v4(), text: 'Bem-vindo(a) à mentoria da Educado!', time: '10:26', user: 'bot' },
+    { id: uuid.v4(), text: 'Bem-vindo(a) à mentoria da EducaAI!', time: '10:26', user: 'bot' },
     { id: uuid.v4(), text: 'Alertamos para que não compartilhe dados pessoais e imagens...', time: '10:26', user: 'bot' },
     { id: uuid.v4(), text: 'Depois de iniciado o atendimento, se não houver interação após 2 horas, o atendimento será encerrado.', time: '10:26', user: 'bot' },
   ]);
@@ -73,8 +73,8 @@ export function ChatScreen({ navigation }) {
           <Ionicons name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         <View>
-          <Text style={styles.headerTitle}>JA</Text>
-          <Text style={styles.headerSubtitle}>Cardiologia</Text>
+          <Text style={styles.headerTitle}>Dúvida</Text>
+          <Text style={styles.headerSubtitle}>Clínico Geral</Text>
         </View>
       </View>
 

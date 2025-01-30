@@ -32,7 +32,7 @@ export function MainScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.greeting}>Olá! Bom dia,</Text>
-        <Text style={styles.name}>Yarah Ferreira</Text>
+        <Text style={styles.name}>Geovanna</Text>
         <Text style={styles.role}>MENTORADO</Text>
       </View>
 
