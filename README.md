@@ -1,4 +1,4 @@
-Claro, aqui está o README com a adição do GIF no final:
+Claro, aqui está o README com a adição do GIF no finalll:
 
 ---
 
